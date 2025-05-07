@@ -1,0 +1,142 @@
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle with gradient -->
+  <circle cx="60" cy="60" r="55" fill="url(#cyberpunk-gradient)">
+    <animate attributeName="opacity" values="0.9;1;0.9" dur="4s" repeatCount="indefinite" />
+  </circle>
+  
+  <!-- Hexágonos de fundo (simbolizando o kernel Linux) -->
+  <g opacity="0.2">
+    <path d="M60 20L70 25.98L70 37.94L60 43.92L50 37.94L50 25.98L60 20Z" stroke="#42b883" stroke-width="0.5" fill="none">
+      <animateTransform attributeName="transform" type="rotate" from="0 60 60" to="360 60 60" dur="60s" repeatCount="indefinite" />
+    </path>
+    <path d="M60 25L67 29.33L67 38L60 42.33L53 38L53 29.33L60 25Z" stroke="#42b883" stroke-width="0.5" fill="none">
+      <animateTransform attributeName="transform" type="rotate" from="0 60 60" to="-360 60 60" dur="50s" repeatCount="indefinite" />
+    </path>
+    <path d="M60 76L70 81.98L70 93.94L60 99.92L50 93.94L50 81.98L60 76Z" stroke="#42b883" stroke-width="0.5" fill="none">
+      <animateTransform attributeName="transform" type="rotate" from="0 60 60" to="360 60 60" dur="60s" repeatCount="indefinite" />
+    </path>
+  </g>
+  
+  <!-- Terminal commands background effect -->
+  <g opacity="0.15">
+    <text x="20" y="25" font-family="monospace" font-size="3" fill="#00FF00">$ ls -la</text>
+    <text x="20" y="30" font-family="monospace" font-size="3" fill="#00FF00">$ cd /home/user</text>
+    <text x="20" y="35" font-family="monospace" font-size="3" fill="#00FF00">$ sudo apt update</text>
+    <text x="20" y="40" font-family="monospace" font-size="3" fill="#00FF00">$ git pull origin</text>
+    <text x="20" y="95" font-family="monospace" font-size="3" fill="#00FF00">$ vim config.sh</text>
+    <text x="20" y="100" font-family="monospace" font-size="3" fill="#00FF00">$ ./install.sh</text>
+    <text x="20" y="105" font-family="monospace" font-size="3" fill="#00FF00">$ systemctl status</text>
+    <text x="75" y="25" font-family="monospace" font-size="3" fill="#00FF00">$ grep -r "linux"</text>
+    <text x="75" y="30" font-family="monospace" font-size="3" fill="#00FF00">$ cat /etc/os-release</text>
+    <text x="75" y="35" font-family="monospace" font-size="3" fill="#00FF00">$ uname -a</text>
+    <text x="75" y="40" font-family="monospace" font-size="3" fill="#00FF00">$ docker ps</text>
+    <text x="75" y="95" font-family="monospace" font-size="3" fill="#00FF00">$ ps aux | grep</text>
+    <text x="75" y="100" font-family="monospace" font-size="3" fill="#00FF00">$ df -h</text>
+    <text x="75" y="105" font-family="monospace" font-size="3" fill="#00FF00">$ free -m</text>
+    <animateTransform attributeName="transform" type="rotate" from="0 60 60" to="360 60 60" dur="120s" repeatCount="indefinite" />
+  </g>
+  
+  <!-- Tux (Pinguim) body - Perfeitamente centralizado -->
+  <g>
+    <!-- Body with subtle animation -->
+    <path d="M60 35C50 35 42 44 42 54C42 64 50 73 60 73C70 73 78 64 78 54C78 44 70 35 60 35Z" fill="#35495E">
+      <animate attributeName="fill" values="#35495E;#2C3E50;#35495E" dur="4s" repeatCount="indefinite" />
+      <animate attributeName="d" values="M60 35C50 35 42 44 42 54C42 64 50 73 60 73C70 73 78 64 78 54C78 44 70 35 60 35Z;M60 36C51 36 43 45 43 54C43 63 51 72 60 72C69 72 77 63 77 54C77 45 69 36 60 36Z;M60 35C50 35 42 44 42 54C42 64 50 73 60 73C70 73 78 64 78 54C78 44 70 35 60 35Z" dur="6s" repeatCount="indefinite" />
+    </path>
+    
+    <!-- White belly with subtle animation -->
+    <path d="M60 47C55 47 51 50 51 55C51 60 55 64 60 64C65 64 69 60 69 55C69 50 65 47 60 47Z" fill="#FFFFFF" opacity="0.9">
+      <animate attributeName="opacity" values="0.9;1;0.9" dur="4s" repeatCount="indefinite" />
+      <animate attributeName="d" values="M60 47C55 47 51 50 51 55C51 60 55 64 60 64C65 64 69 60 69 55C69 50 65 47 60 47Z;M60 48C56 48 52 51 52 55C52 59 56 63 60 63C64 63 68 59 68 55C68 51 64 48 60 48Z;M60 47C55 47 51 50 51 55C51 60 55 64 60 64C65 64 69 60 69 55C69 50 65 47 60 47Z" dur="6s" repeatCount="indefinite" />
+    </path>
+    
+    <!-- Eyes with blinking animation -->
+    <circle cx="54" cy="44" r="2.5" fill="#FFFFFF" />
+    <circle cx="66" cy="44" r="2.5" fill="#FFFFFF" />
+    <circle cx="54" cy="44" r="1.2" fill="#000000">
+      <animate attributeName="r" values="1.2;0.2;1.2" dur="5s" repeatCount="indefinite" begin="1s" />
+      <animate attributeName="cx" values="54;54.3;54" dur="3s" repeatCount="indefinite" />
+    </circle>
+    <circle cx="66" cy="44" r="1.2" fill="#000000">
+      <animate attributeName="r" values="1.2;0.2;1.2" dur="5s" repeatCount="indefinite" />
+      <animate attributeName="cx" values="66;66.3;66" dur="3s" repeatCount="indefinite" />
+    </circle>
+    
+    <!-- Beak with subtle color change -->
+    <path d="M57 49L63 49L60 53Z" fill="#FFA500">
+      <animate attributeName="fill" values="#FFA500;#FF9800;#FFA500" dur="4s" repeatCount="indefinite" />
+      <animate attributeName="d" values="M57 49L63 49L60 53Z;M57.5 49L62.5 49L60 52.5Z;M57 49L63 49L60 53Z" dur="3s" repeatCount="indefinite" />
+    </path>
+    
+    <!-- Arms with subtle movement -->
+    <path d="M42 54C42 54 36 58 38 66C38 66 41 64 43 64" stroke="#35495E" stroke-width="2.5" fill="none">
+      <animate attributeName="stroke" values="#35495E;#2C3E50;#35495E" dur="4s" repeatCount="indefinite" />
+      <animate attributeName="d" values="M42 54C42 54 36 58 38 66C38 66 41 64 43 64;M42 54C42 54 35 57 37 65C37 65 40 63 42 63;M42 54C42 54 36 58 38 66C38 66 41 64 43 64" dur="8s" repeatCount="indefinite" />
+    </path>
+    <path d="M78 54C78 54 84 58 82 66C82 66 79 64 77 64" stroke="#35495E" stroke-width="2.5" fill="none">
+      <animate attributeName="stroke" values="#35495E;#2C3E50;#35495E" dur="4s" repeatCount="indefinite" />
+      <animate attributeName="d" values="M78 54C78 54 84 58 82 66C82 66 79 64 77 64;M78 54C78 54 85 57 83 65C83 65 80 63 78 63;M78 54C78 54 84 58 82 66C82 66 79 64 77 64" dur="8s" repeatCount="indefinite" />
+    </path>
+    
+    <!-- Beer mug in right hand with improved animations -->
+    <path d="M82 66L88 66L88 80L82 80Z" fill="#FFC107" stroke="#E0E0E0" stroke-width="1.5">
+      <animate attributeName="fill" values="#FFC107;#FFD54F;#FFC107" dur="2s" repeatCount="indefinite" />
+      <animate attributeName="d" values="M82 66L88 66L88 80L82 80Z;M83 66L89 66L89 80L83 80Z;M82 66L88 66L88 80L82 80Z" dur="8s" repeatCount="indefinite" />
+    </path>
+    <path d="M88 66C88 66 92 68 92 73C92 78 88 80 88 80" stroke="#E0E0E0" stroke-width="1.5" fill="none">
+      <animate attributeName="d" values="M88 66C88 66 92 68 92 73C92 78 88 80 88 80;M89 66C89 66 93 68 93 73C93 78 89 80 89 80;M88 66C88 66 92 68 92 73C92 78 88 80 88 80" dur="8s" repeatCount="indefinite" />
+    </path>
+    
+    <!-- Detalhes da cerveja -->
+    <path d="M82 69L88 69" stroke="#FFFFFF" stroke-width="0.8" opacity="0.7" />
+    <path d="M82 72L88 72" stroke="#FFFFFF" stroke-width="0.8" opacity="0.7" />
+    <path d="M82 75L88 75" stroke="#FFFFFF" stroke-width="0.8" opacity="0.7" />
+    
+    <!-- Foam on beer with animation -->
+    <path d="M82 66C82 66 83 63 85 63C87 63 88 66 88 66" fill="#FFFFFF">
+      <animate attributeName="d" values="M82 66C82 66 83 63 85 63C87 63 88 66 88 66;M83 66C83 66 84 63 85 63C86 63 89 66 89 66;M82 66C82 66 83 63 85 63C87 63 88 66 88 66" dur="8s" repeatCount="indefinite" />
+    </path>
+    <path d="M83 63C83 63 84 62 85 62C86 62 87 63 87 63" fill="#FFFFFF" opacity="0.8">
+      <animate attributeName="d" values="M83 63C83 63 84 62 85 62C86 62 87 63 87 63;M84 63C84 63 84.5 61.5 85 61.5C85.5 61.5 88 63 88 63;M83 63C83 63 84 62 85 62C86 62 87 63 87 63" dur="8s" repeatCount="indefinite" />
+    </path>
+    
+    <!-- Feet with subtle movement -->
+    <path d="M53 73L47 85L60 85L67 85L73 85L67 73" fill="#FFA500">
+      <animate attributeName="fill" values="#FFA500;#FF9800;#FFA500" dur="4s" repeatCount="indefinite" />
+      <animate attributeName="d" values="M53 73L47 85L60 85L67 85L73 85L67 73;M53 73L48 86L60 86L67 86L72 86L67 73;M53 73L47 85L60 85L67 85L73 85L67 73" dur="6s" repeatCount="indefinite" />
+    </path>
+  </g>
+  
+  <!-- Beer bubbles with enhanced animation -->
+  <g>
+    <circle cx="85" cy="72" r="1.2" fill="#FFFFFF" opacity="0.7">
+      <animate attributeName="cy" values="72;67;62" dur="2s" repeatCount="indefinite" />
+      <animate attributeName="opacity" values="0.7;0.5;0" dur="2s" repeatCount="indefinite" />
+      <animate attributeName="cx" values="85;85.5;85" dur="2s" repeatCount="indefinite" />
+    </circle>
+    <circle cx="83" cy="74" r="1" fill="#FFFFFF" opacity="0.7">
+      <animate attributeName="cy" values="74;69;64" dur="2.5s" repeatCount="indefinite" />
+      <animate attributeName="opacity" values="0.7;0.5;0" dur="2.5s" repeatCount="indefinite" />
+      <animate attributeName="cx" values="83;83.5;83" dur="2.5s" repeatCount="indefinite" />
+    </circle>
+    <circle cx="86" cy="76" r="0.8" fill="#FFFFFF" opacity="0.7">
+      <animate attributeName="cy" values="76;71;66" dur="3s" repeatCount="indefinite" />
+      <animate attributeName="opacity" values="0.7;0.5;0" dur="3s" repeatCount="indefinite" />
+      <animate attributeName="cx" values="86;86.5;86" dur="3s" repeatCount="indefinite" />
+    </circle>
+  </g>
+  
+  <!-- Linux command prompt cursor blinking -->
+  <rect x="60" y="90" width="0.8" height="3" fill="#00FF00" opacity="0.7">
+    <animate attributeName="opacity" values="0.7;0;0.7" dur="1s" repeatCount="indefinite" />
+  </rect>
+  
+  <!-- Gradients definition -->
+  <defs>
+    <linearGradient id="cyberpunk-gradient" x1="0" y1="0" x2="120" y2="120" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0D0221" />
+      <stop offset="0.5" stop-color="#150734" />
+      <stop offset="1" stop-color="#1A0B3B" />
+    </linearGradient>
+  </defs>
+</svg>

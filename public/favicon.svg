@@ -1,0 +1,83 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle with gradient -->
+  <circle cx="16" cy="16" r="15" fill="url(#cyberpunk-gradient)">
+    <animate attributeName="opacity" values="0.8;1;0.8" dur="4s" repeatCount="indefinite" />
+  </circle>
+  
+  <!-- Hexágono de fundo (simbolizando o kernel Linux) -->
+  <path d="M16 6L20 8.5L20 13.5L16 16L12 13.5L12 8.5L16 6Z" stroke="#42b883" stroke-width="0.2" fill="none" opacity="0.3">
+    <animateTransform attributeName="transform" type="rotate" from="0 16 16" to="360 16 16" dur="30s" repeatCount="indefinite" />
+  </path>
+  
+  <!-- Tux (Pinguim) body -->
+  <g>
+    <!-- Body -->
+    <path d="M16 11C13 11 11 13 11 15C11 17 13 19 16 19C19 19 21 17 21 15C21 13 19 11 16 11Z" fill="#35495E">
+      <animate attributeName="fill" values="#35495E;#2C3E50;#35495E" dur="4s" repeatCount="indefinite" />
+    </path>
+    
+    <!-- White belly -->
+    <path d="M16 13.5C14.5 13.5 13.5 14.5 13.5 15.5C13.5 16.5 14.5 17.5 16 17.5C17.5 17.5 18.5 16.5 18.5 15.5C18.5 14.5 17.5 13.5 16 13.5Z" fill="#FFFFFF" opacity="0.9" />
+    
+    <!-- Eyes with blinking animation -->
+    <circle cx="14.5" cy="13" r="0.6" fill="#FFFFFF" />
+    <circle cx="17.5" cy="13" r="0.6" fill="#FFFFFF" />
+    <circle cx="14.5" cy="13" r="0.3" fill="#000000">
+      <animate attributeName="r" values="0.3;0.1;0.3" dur="5s" repeatCount="indefinite" begin="1s" />
+    </circle>
+    <circle cx="17.5" cy="13" r="0.3" fill="#000000">
+      <animate attributeName="r" values="0.3;0.1;0.3" dur="5s" repeatCount="indefinite" />
+    </circle>
+    
+    <!-- Beak -->
+    <path d="M15.5 14L16.5 14L16 15Z" fill="#FFA500">
+      <animate attributeName="fill" values="#FFA500;#FF9800;#FFA500" dur="4s" repeatCount="indefinite" />
+    </path>
+    
+    <!-- Beer mug in hand with animation -->
+    <path d="M21 15C21 15 22 15.5 21.5 17.5" stroke="#35495E" stroke-width="0.5" fill="none">
+      <animate attributeName="d" values="M21 15C21 15 22 15.5 21.5 17.5;M21 15C21 15 22.2 15.3 21.7 17.3;M21 15C21 15 22 15.5 21.5 17.5" dur="8s" repeatCount="indefinite" />
+    </path>
+    <path d="M21.5 17.5L22.5 17.5L22.5 20L21.5 20Z" fill="#FFC107" stroke="#E0E0E0" stroke-width="0.3">
+      <animate attributeName="fill" values="#FFC107;#FFD54F;#FFC107" dur="2s" repeatCount="indefinite" />
+    </path>
+    <path d="M22.5 17.5C22.5 17.5 23 18 23 18.5C23 19 22.5 20 22.5 20" stroke="#E0E0E0" stroke-width="0.3" fill="none" />
+    
+    <!-- Foam on beer -->
+    <path d="M21.5 17.5C21.5 17.5 21.8 17 22 17C22.2 17 22.5 17.5 22.5 17.5" fill="#FFFFFF" opacity="0.8" />
+    
+    <!-- Beer bubbles -->
+    <circle cx="22" cy="19" r="0.2" fill="#FFFFFF" opacity="0.7">
+      <animate attributeName="cy" values="19;18;17" dur="2s" repeatCount="indefinite" />
+      <animate attributeName="opacity" values="0.7;0.3;0" dur="2s" repeatCount="indefinite" />
+    </circle>
+    
+    <!-- Feet -->
+    <path d="M14.5 19L13 22L16 22L19 22L18 19" fill="#FFA500">
+      <animate attributeName="fill" values="#FFA500;#FF9800;#FFA500" dur="4s" repeatCount="indefinite" />
+    </path>
+  </g>
+  
+  <!-- Terminal commands (simplificado para o tamanho do favicon) -->
+  <g opacity="0.15">
+    <text x="6" y="26" font-family="monospace" font-size="1" fill="#00FF00">$ ls</text>
+    <text x="6" y="28" font-family="monospace" font-size="1" fill="#00FF00">$ cd</text>
+    <text x="20" y="26" font-family="monospace" font-size="1" fill="#00FF00">$ vim</text>
+    <text x="20" y="28" font-family="monospace" font-size="1" fill="#00FF00">$ sudo</text>
+    <animateTransform attributeName="transform" type="rotate" from="0 16 16" to="360 16 16" dur="60s" repeatCount="indefinite" />
+  </g>
+  
+  <!-- Linux command prompt cursor blinking -->
+  <rect x="16" y="24" width="0.3" height="1" fill="#00FF00" opacity="0.7">
+    <animate attributeName="opacity" values="0.7;0;0.7" dur="1s" repeatCount="indefinite" />
+  </rect>
+  
+  <!-- Gradients definition -->
+  <defs>
+    <linearGradient id="cyberpunk-gradient" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0D0221" />
+      <stop offset="0.5" stop-color="#150734" />
+      <stop offset="1" stop-color="#1A0B3B" />
+    </linearGradient>
+  </defs>
+</svg>
