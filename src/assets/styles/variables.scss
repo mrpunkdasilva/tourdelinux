@@ -1,0 +1,144 @@
+// Cyberpunk Terminal Design System Variables
+
+// Colors
+$color-bg-primary: #0a0a0a;
+$color-bg-secondary: #121212;
+$color-bg-terminal: #000000;
+$color-bg-input: #1a1a1a;
+
+$color-text-primary: #00ff00; // Neon green
+$color-text-secondary: #00ccff; // Cyan
+$color-text-accent: #ff00ff; // Magenta
+$color-text-warning: #ffcc00; // Yellow
+$color-text-error: #ff0000; // Red
+$color-text-success: #00ff99; // Bright green
+$color-text-muted: #666666; // Dimmed text
+
+$color-border-primary: #333333;
+$color-border-terminal: #00ff00;
+$color-border-focus: #00ccff;
+
+// Typography
+$font-family-mono: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+$font-family-system: $font-family-mono; // Use monospace for everything
+
+$font-size-xs: 0.75rem;   // 12px
+$font-size-sm: 0.875rem;  // 14px
+$font-size-md: 1rem;      // 16px
+$font-size-lg: 1.125rem;  // 18px
+$font-size-xl: 1.25rem;   // 20px
+$font-size-2xl: 1.5rem;   // 24px
+$font-size-3xl: 1.875rem; // 30px
+$font-size-4xl: 2.25rem;  // 36px
+
+$line-height-tight: 1.2;
+$line-height-normal: 1.5;
+$line-height-loose: 1.8;
+
+// Spacing
+$spacing-xs: 0.25rem;  // 4px
+$spacing-sm: 0.5rem;   // 8px
+$spacing-md: 1rem;     // 16px
+$spacing-lg: 1.5rem;   // 24px
+$spacing-xl: 2rem;     // 32px
+$spacing-2xl: 3rem;    // 48px
+$spacing-3xl: 4rem;    // 64px
+
+// Effects
+$glow-primary: 0 0 10px rgba(0, 255, 0, 0.5);
+$glow-secondary: 0 0 10px rgba(0, 204, 255, 0.5);
+$glow-accent: 0 0 10px rgba(255, 0, 255, 0.5);
+
+// Animation
+$transition-fast: 0.1s;
+$transition-normal: 0.2s;
+$transition-slow: 0.3s;
+
+// Terminal specific
+$terminal-padding: $spacing-md;
+$terminal-border-radius: 4px;
+$terminal-prompt-color: $color-text-secondary;
+$terminal-cursor-width: 0.5rem;
+$terminal-cursor-blink-speed: 0.8s;
+
+// Z-index
+$z-index-dropdown: 100;
+$z-index-sticky: 200;
+$z-index-fixed: 300;
+$z-index-modal-backdrop: 400;
+$z-index-modal: 500;
+$z-index-popover: 600;
+$z-index-tooltip: 700;
+
+// Export as CSS variables
+:root {
+  // Colors
+  --color-bg-primary: #{$color-bg-primary};
+  --color-bg-secondary: #{$color-bg-secondary};
+  --color-bg-terminal: #{$color-bg-terminal};
+  --color-bg-input: #{$color-bg-input};
+  
+  --color-text-primary: #{$color-text-primary};
+  --color-text-secondary: #{$color-text-secondary};
+  --color-text-accent: #{$color-text-accent};
+  --color-text-warning: #{$color-text-warning};
+  --color-text-error: #{$color-text-error};
+  --color-text-success: #{$color-text-success};
+  --color-text-muted: #{$color-text-muted};
+  
+  --color-border-primary: #{$color-border-primary};
+  --color-border-terminal: #{$color-border-terminal};
+  --color-border-focus: #{$color-border-focus};
+  
+  // Typography
+  --font-family-mono: #{$font-family-mono};
+  --font-family-system: #{$font-family-system};
+  
+  --font-size-xs: #{$font-size-xs};
+  --font-size-sm: #{$font-size-sm};
+  --font-size-md: #{$font-size-md};
+  --font-size-lg: #{$font-size-lg};
+  --font-size-xl: #{$font-size-xl};
+  --font-size-2xl: #{$font-size-2xl};
+  --font-size-3xl: #{$font-size-3xl};
+  --font-size-4xl: #{$font-size-4xl};
+  
+  --line-height-tight: #{$line-height-tight};
+  --line-height-normal: #{$line-height-normal};
+  --line-height-loose: #{$line-height-loose};
+  
+  // Spacing
+  --spacing-xs: #{$spacing-xs};
+  --spacing-sm: #{$spacing-sm};
+  --spacing-md: #{$spacing-md};
+  --spacing-lg: #{$spacing-lg};
+  --spacing-xl: #{$spacing-xl};
+  --spacing-2xl: #{$spacing-2xl};
+  --spacing-3xl: #{$spacing-3xl};
+  
+  // Effects
+  --glow-primary: #{$glow-primary};
+  --glow-secondary: #{$glow-secondary};
+  --glow-accent: #{$glow-accent};
+  
+  // Animation
+  --transition-fast: #{$transition-fast};
+  --transition-normal: #{$transition-normal};
+  --transition-slow: #{$transition-slow};
+  
+  // Terminal specific
+  --terminal-padding: #{$terminal-padding};
+  --terminal-border-radius: #{$terminal-border-radius};
+  --terminal-prompt-color: #{$terminal-prompt-color};
+  --terminal-cursor-width: #{$terminal-cursor-width};
+  --terminal-cursor-blink-speed: #{$terminal-cursor-blink-speed};
+  
+  // Z-index
+  --z-index-dropdown: #{$z-index-dropdown};
+  --z-index-sticky: #{$z-index-sticky};
+  --z-index-fixed: #{$z-index-fixed};
+  --z-index-modal-backdrop: #{$z-index-modal-backdrop};
+  --z-index-modal: #{$z-index-modal};
+  --z-index-popover: #{$z-index-popover};
+  --z-index-tooltip: #{$z-index-tooltip};
+}

@@ -1,6 +1,8 @@
 // Factory para criar dados mockados de notícias
+import type {NewsItem} from "@/types/News";
+
 export class NewsFactory {
-  static getMockNews() {
+  static getMockNews(): NewsItem[] {
     return [
       {
         id: 1,
@@ -90,12 +92,12 @@ export class NewsFactory {
     ];
   }
 
-  static getNewsById(id: number) {
+  static getNewsById(id: number): NewsItem | undefined {
     const allNews = this.getMockNews();
     return allNews.find(item => item.id === id);
   }
 
-  static getRelatedNews(newsId: number, limit: number = 3) {
+  static getRelatedNews(newsId: number, limit: number = 3): NewsItem[] {
     const allNews = this.getMockNews();
     const currentNews = this.getNewsById(newsId);
     
