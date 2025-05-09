@@ -49,7 +49,7 @@ const navigateToDistribution = (id: number) => {
 const handleRate = (data: { distributionId: number, rating: number }) => {
   // Em uma implementação real, aqui enviaríamos a avaliação para o backend
   console.log(`Distribuição ${data.distributionId} avaliada com ${data.rating} estrelas`)
-  
+
   // Atualiza a avaliação localmente para demonstração
   const distribution = featuredDistributions.value.find(d => d.id === data.distributionId)
   if (distribution) {
@@ -81,6 +81,45 @@ const handleRate = (data: { distributionId: number, rating: number }) => {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 1.5rem;
+}
+
+/* Cyberpunk terminal styling for distribution cards */
+:deep(.distribution-card) {
+  background-color: rgba(0, 20, 0, 0.7) !important;
+  border: 1px solid #0f0 !important;
+  box-shadow: 0 0 10px rgba(0, 255, 0, 0.2) !important;
+  color: #0f0 !important;
+}
+
+:deep(.card-title) {
+  color: #0f0 !important;
+  text-shadow: 0 0 5px #0f0 !important;
+}
+
+:deep(.card-content) {
+  color: #0f0 !important;
+}
+
+:deep(.card-footer) {
+  border-top: 1px solid rgba(0, 255, 0, 0.3) !important;
+}
+
+:deep(.btn) {
+  background-color: rgba(0, 50, 0, 0.7) !important;
+  border: 1px solid #0f0 !important;
+  color: #0f0 !important;
+  text-shadow: 0 0 2px #0f0 !important;
+  transition: all 0.3s ease !important;
+}
+
+:deep(.btn:hover) {
+  background-color: rgba(0, 100, 0, 0.7) !important;
+  box-shadow: 0 0 10px rgba(0, 255, 0, 0.5) !important;
+}
+
+:deep(.rating-star) {
+  color: #0f0 !important;
+  text-shadow: 0 0 5px #0f0 !important;
 }
 
 @media (max-width: 768px) {

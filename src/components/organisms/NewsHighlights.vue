@@ -65,6 +65,54 @@ const navigateToNews = (id: number) => {
   gap: 1.5rem;
 }
 
+/* Cyberpunk terminal styling for news cards */
+:deep(.news-card) {
+  background-color: rgba(0, 20, 0, 0.7) !important;
+  border: 1px solid #0f0 !important;
+  box-shadow: 0 0 10px rgba(0, 255, 0, 0.2) !important;
+  color: #0f0 !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  overflow: hidden !important;
+}
+
+:deep(.news-card:hover) {
+  box-shadow: 0 0 15px rgba(0, 255, 0, 0.4) !important;
+  transform: translateY(-3px) !important;
+}
+
+:deep(.news-image) {
+  filter: sepia(50%) hue-rotate(80deg) saturate(150%) !important;
+  opacity: 0.8 !important;
+  transition: all 0.3s ease !important;
+}
+
+:deep(.news-card:hover .news-image) {
+  opacity: 1 !important;
+  filter: sepia(30%) hue-rotate(80deg) saturate(200%) !important;
+}
+
+:deep(.news-title) {
+  color: #0f0 !important;
+  text-shadow: 0 0 5px #0f0 !important;
+}
+
+:deep(.news-excerpt) {
+  color: #0f0 !important;
+}
+
+:deep(.news-meta) {
+  color: rgba(0, 255, 0, 0.7) !important;
+  border-top: 1px solid rgba(0, 255, 0, 0.3) !important;
+}
+
+:deep(.news-category) {
+  background-color: rgba(0, 50, 0, 0.7) !important;
+  border: 1px solid #0f0 !important;
+  color: #0f0 !important;
+  text-shadow: 0 0 2px #0f0 !important;
+}
+
 @media (max-width: 768px) {
   .news-grid {
     grid-template-columns: 1fr;
