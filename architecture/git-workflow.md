@@ -87,6 +87,8 @@ Se você estava trabalhando em um branch de longa duração:
 2. Integre cada parte ao trunk assim que estiver pronta e testada
 3. Use feature flags para ocultar funcionalidades incompletas
 
+> **Nota**: A transição para o Trunk-Based Development foi concluída em 15/05/2023. O branch `cyberpunk-terminal-design` foi mesclado ao trunk (`main`) e todos os desenvolvedores agora devem seguir este novo fluxo de trabalho.
+
 ## Referências
 
 - [Trunk-Based Development](https://trunkbaseddevelopment.com/)
