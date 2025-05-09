@@ -1,56 +1,92 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { useRoute } from 'vue-router'
-import BaseButton from '../../components/atoms/BaseButton.vue'
-import RatingStars from '../../components/atoms/RatingStars.vue'
+import { useRoute, useRouter } from 'vue-router'
 
 const route = useRoute()
-const distributionId = Number(route.params.id)
-
+const router = useRouter()
 const distribution = ref(null)
 const isLoading = ref(true)
-const error = ref(null)
+const error = ref('')
 
-// Simulação de busca de dados
 const fetchDistribution = async () => {
-  isLoading.value = true
-  error.value = null
-  
   try {
-    // Em uma aplicação real, aqui faríamos uma chamada à API
+    isLoading.value = true
+    error.value = ''
+    
+    const id = Number(route.params.id)
+    
+    // Simulando chamada de API
     await new Promise(resolve => setTimeout(resolve, 800))
     
     // Dados mockados para demonstração
-    distribution.value = {
-      id: distributionId,
-      name: 'Ubuntu',
-      version: '22.04 LTS',
-      logo: '/src/assets/images/ubuntu-logo.png',
-      basedOn: 'Debian',
-      releaseDate: '2022-04-21',
-      desktopEnvironment: 'GNOME',
-      description: 'Ubuntu é uma distribuição Linux baseada no Debian, focada em facilidade de uso e acessibilidade. É uma das distribuições mais populares para desktops e servidores, com uma grande comunidade de usuários e desenvolvedores.',
-      longDescription: `
-        Ubuntu é uma distribuição Linux baseada no Debian, desenvolvida pela Canonical Ltd. O nome da distribuição vem do conceito zulu/xhosa de ubuntu, que significa "humanidade para com os outros" ou "sou o que sou pelo que nós somos todos".
-        
-        A distribuição foi lançada em outubro de 2004 e desde então tem sido uma das mais populares distribuições Linux para desktops e servidores. Ubuntu é lançado a cada seis meses, com versões LTS (Long Term Support) a cada dois anos, que recebem suporte por cinco anos.
-        
-        Ubuntu vem com um conjunto abrangente de software instalado, incluindo LibreOffice, Firefox, Thunderbird e muitos outros aplicativos. Também inclui ferramentas de desenvolvimento e servidores, tornando-o adequado para uso em servidores e desenvolvimento de software.
-      `,
-      rating: 4.5,
-      systemRequirements: {
-        processor: '2 GHz dual core processor ou superior',
-        memory: '4 GB RAM',
-        storage: '25 GB de espaço livre em disco',
-        graphics: 'Placa de vídeo compatível com 3D e resolução de 1024x768'
+    const mockDistributions = [
+      {
+        id: 1,
+        name: 'Ubuntu',
+        version: '22.04 LTS',
+        category: 'desktop',
+        logo: '/src/assets/images/ubuntu-logo.png',
+        description: 'Uma das distribuições Linux mais populares, conhecida por sua facilidade de uso.',
+        rating: 4.5,
+        releaseDate: '2022-04-21',
+        basedOn: 'Debian',
+        website: 'https://ubuntu.com',
+        desktopEnvironment: 'GNOME',
+        packageManager: 'APT',
+        systemRequirements: {
+          cpu: '2 GHz dual core processor',
+          ram: '4 GB',
+          storage: '25 GB'
+        },
+        features: [
+          'Interface amigável para iniciantes',
+          'Grande comunidade e suporte',
+          'Vasta biblioteca de software',
+          'Atualizações LTS com suporte de 5 anos',
+          'Integração com serviços de nuvem'
+        ],
+        screenshots: [
+          '/src/assets/images/ubuntu-screenshot-1.jpg',
+          '/src/assets/images/ubuntu-screenshot-2.jpg',
+          '/src/assets/images/ubuntu-screenshot-3.jpg'
+        ]
       },
-      screenshots: [
-        '/src/assets/images/ubuntu-screenshot-1.jpg',
-        '/src/assets/images/ubuntu-screenshot-2.jpg',
-        '/src/assets/images/ubuntu-screenshot-3.jpg'
-      ],
-      downloadUrl: 'https://ubuntu.com/download/desktop',
-      website: 'https://ubuntu.com/'
+      {
+        id: 2,
+        name: 'Debian',
+        version: '11 Bullseye',
+        category: 'server',
+        logo: '/src/assets/images/debian-logo.png',
+        description: 'Conhecida por sua estabilidade e segurança, é uma excelente escolha para servidores.',
+        rating: 4.7,
+        releaseDate: '2021-08-14',
+        basedOn: 'Independent',
+        website: 'https://debian.org',
+        desktopEnvironment: 'GNOME, KDE, Xfce, LXDE, etc.',
+        packageManager: 'APT',
+        systemRequirements: {
+          cpu: '1 GHz processor',
+          ram: '512 MB (minimal), 2 GB (recommended)',
+          storage: '10 GB (minimal), 20 GB (recommended)'
+        },
+        features: [
+          'Extremamente estável',
+          'Foco em software livre',
+          'Suporte para múltiplas arquiteturas',
+          'Processo de lançamento rigoroso',
+          'Base para muitas outras distribuições'
+        ],
+        screenshots: [
+          '/src/assets/images/debian-screenshot-1.jpg',
+          '/src/assets/images/debian-screenshot-2.jpg'
+        ]
+      }
+    ]
+    
+    const foundDistribution = mockDistributions.find(d => d.id === id)
+    
+    if (foundDistribution) {
+      distribution.value = foundDistribution
     }
   } catch (err) {
     error.value = 'Erro ao carregar os dados da distribuição'
@@ -68,79 +104,99 @@ onMounted(() => {
 <template>
   <div class="distribution-detail">
     <div v-if="isLoading" class="loading">
-      <p>Carregando informações da distribuição...</p>
+      <p>Carregando distribuição...</p>
     </div>
     
     <div v-else-if="error" class="error">
       <p>{{ error }}</p>
-      <BaseButton @click="fetchDistribution">Tentar novamente</BaseButton>
+      <button @click="fetchDistribution">Tentar novamente</button>
     </div>
     
     <div v-else-if="distribution" class="distribution-content">
       <div class="distribution-header">
-        <div class="distribution-logo-container">
+        <div class="back-button" @click="$router.go(-1)">
+          ← Voltar
+        </div>
+        
+        <div class="distribution-title">
           <img 
             :src="distribution.logo" 
             :alt="`${distribution.name} logo`" 
             class="distribution-logo"
             @error="$event.target.src = '/src/assets/images/default-distro.png'"
           />
-        </div>
-        
-        <div class="distribution-title">
-          <h1>{{ distribution.name }} <span class="version">{{ distribution.version }}</span></h1>
-          <div class="distribution-meta">
-            <div class="meta-item">
-              <span class="meta-label">Base:</span>
-              <span class="meta-value">{{ distribution.basedOn }}</span>
-            </div>
-            <div class="meta-item">
-              <span class="meta-label">Release:</span>
-              <span class="meta-value">{{ new Date(distribution.releaseDate).toLocaleDateString() }}</span>
-            </div>
-            <div class="meta-item">
-              <span class="meta-label">Desktop:</span>
-              <span class="meta-value">{{ distribution.desktopEnvironment }}</span>
+          <div>
+            <h1>{{ distribution.name }}</h1>
+            <div class="distribution-meta">
+              <span class="version">{{ distribution.version }}</span>
+              <span class="category">{{ distribution.category }}</span>
+              <div class="rating">
+                <span class="stars">★★★★★</span>
+                <span class="rating-value">{{ distribution.rating }}/5</span>
+              </div>
             </div>
           </div>
-          
-          <div class="distribution-rating">
-            <RatingStars :value="distribution.rating" :readonly="true" />
-          </div>
         </div>
-      </div>
-      
-      <div class="distribution-actions">
-        <BaseButton 
-          variant="primary" 
-          size="large"
-          @click="window.open(distribution.downloadUrl, '_blank')"
-        >
-          Download
-        </BaseButton>
-        
-        <BaseButton 
-          variant="secondary" 
-          size="large"
-          @click="window.open(distribution.website, '_blank')"
-        >
-          Visitar Site Oficial
-        </BaseButton>
       </div>
       
       <div class="distribution-description">
-        <h2>Sobre {{ distribution.name }}</h2>
         <p>{{ distribution.description }}</p>
-        <div class="long-description" v-html="distribution.longDescription.replace(/\n/g, '<br>')"></div>
       </div>
       
-      <div class="distribution-requirements">
+      <div class="distribution-details">
+        <h2>Detalhes</h2>
+        <div class="details-grid">
+          <div class="detail-item">
+            <div class="detail-label">Data de lançamento</div>
+            <div class="detail-value">{{ distribution.releaseDate }}</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Baseada em</div>
+            <div class="detail-value">{{ distribution.basedOn }}</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Website</div>
+            <div class="detail-value">
+              <a :href="distribution.website" target="_blank" rel="noopener noreferrer">
+                {{ distribution.website }}
+              </a>
+            </div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Ambiente Desktop</div>
+            <div class="detail-value">{{ distribution.desktopEnvironment }}</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Gerenciador de Pacotes</div>
+            <div class="detail-value">{{ distribution.packageManager }}</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="system-requirements">
         <h2>Requisitos de Sistema</h2>
-        <ul>
-          <li><strong>Processador:</strong> {{ distribution.systemRequirements.processor }}</li>
-          <li><strong>Memória:</strong> {{ distribution.systemRequirements.memory }}</li>
-          <li><strong>Armazenamento:</strong> {{ distribution.systemRequirements.storage }}</li>
-          <li><strong>Gráficos:</strong> {{ distribution.systemRequirements.graphics }}</li>
+        <div class="requirements-grid">
+          <div class="requirement-item">
+            <div class="requirement-label">Processador</div>
+            <div class="requirement-value">{{ distribution.systemRequirements.cpu }}</div>
+          </div>
+          <div class="requirement-item">
+            <div class="requirement-label">Memória RAM</div>
+            <div class="requirement-value">{{ distribution.systemRequirements.ram }}</div>
+          </div>
+          <div class="requirement-item">
+            <div class="requirement-label">Armazenamento</div>
+            <div class="requirement-value">{{ distribution.systemRequirements.storage }}</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="distribution-features">
+        <h2>Características</h2>
+        <ul class="features-list">
+          <li v-for="(feature, index) in distribution.features" :key="index">
+            {{ feature }}
+          </li>
         </ul>
       </div>
       
@@ -165,9 +221,9 @@ onMounted(() => {
     
     <div v-else class="not-found">
       <p>Distribuição não encontrada</p>
-      <BaseButton @click="$router.push({ name: 'distributions' })">
+      <button @click="$router.push({ name: 'distributions' })">
         Ver todas as distribuições
-      </BaseButton>
+      </button>
     </div>
   </div>
 </template>
@@ -178,119 +234,125 @@ onMounted(() => {
   margin: 0 auto;
 }
 
-.loading, .error, .not-found {
-  text-align: center;
-  padding: 2rem;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+.back-button {
+  margin-bottom: 1rem;
+  cursor: pointer;
+  display: inline-block;
+  padding: 0.5rem 0;
+  color: #2c3e50;
+  font-weight: 500;
 }
 
-.error {
-  color: #e53935;
-}
-
-.distribution-content {
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
+.back-button:hover {
+  color: #42b983;
 }
 
 .distribution-header {
-  display: flex;
-  padding: 2rem;
-  background-color: #f9f9f9;
-  border-bottom: 1px solid #eee;
-}
-
-.distribution-logo-container {
-  flex-shrink: 0;
-  margin-right: 2rem;
-}
-
-.distribution-logo {
-  width: 120px;
-  height: 120px;
-  object-fit: contain;
+  margin-bottom: 2rem;
 }
 
 .distribution-title {
-  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.distribution-logo {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
 }
 
 .distribution-title h1 {
   margin: 0;
-  margin-bottom: 1rem;
-  color: #2c3e50;
-  display: flex;
-  align-items: center;
-}
-
-.version {
-  font-size: 1rem;
-  font-weight: normal;
-  color: #666;
-  margin-left: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
 .distribution-meta {
   display: flex;
-  flex-wrap: wrap;
-  gap: 1.5rem;
-  margin-bottom: 1rem;
-}
-
-.meta-item {
-  display: flex;
-  flex-direction: column;
-}
-
-.meta-label {
-  font-size: 0.75rem;
-  color: #666;
-  margin-bottom: 0.25rem;
-}
-
-.meta-value {
-  font-weight: 500;
-}
-
-.distribution-actions {
-  display: flex;
+  align-items: center;
   gap: 1rem;
-  padding: 1.5rem 2rem;
-  border-bottom: 1px solid #eee;
+  flex-wrap: wrap;
 }
 
-.distribution-description,
-.distribution-requirements,
-.distribution-screenshots {
-  padding: 2rem;
-  border-bottom: 1px solid #eee;
+.version {
+  background-color: #e0e0e0;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
 }
 
-.distribution-description h2,
-.distribution-requirements h2,
-.distribution-screenshots h2 {
+.category {
+  background-color: #42b983;
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  text-transform: capitalize;
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+}
+
+.stars {
+  color: #FFD700;
+  margin-right: 0.5rem;
+}
+
+.distribution-description {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.distribution-details, .system-requirements, .distribution-features, .distribution-screenshots {
+  margin-bottom: 2.5rem;
+}
+
+h2 {
   margin-top: 0;
   margin-bottom: 1rem;
   color: #2c3e50;
+  border-bottom: 2px solid #f0f0f0;
+  padding-bottom: 0.5rem;
 }
 
-.distribution-description p {
-  margin-bottom: 1.5rem;
+.details-grid, .requirements-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+}
+
+.detail-item, .requirement-item {
+  padding: 1rem;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+}
+
+.detail-label, .requirement-label {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #666;
+}
+
+.detail-value a {
+  color: #42b983;
+  text-decoration: none;
+}
+
+.detail-value a:hover {
+  text-decoration: underline;
+}
+
+.features-list {
+  padding-left: 1.5rem;
   line-height: 1.6;
 }
 
-.long-description {
-  line-height: 1.6;
-  color: #444;
-}
-
-.distribution-requirements ul {
-  list-style-position: inside;
-  line-height: 1.6;
+.features-list li {
+  margin-bottom: 0.5rem;
 }
 
 .screenshots-grid {
@@ -300,9 +362,9 @@ onMounted(() => {
 }
 
 .screenshot-item {
-  border-radius: 4px;
+  border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .screenshot-image {
@@ -311,24 +373,35 @@ onMounted(() => {
   display: block;
 }
 
+.loading, .error, .not-found {
+  text-align: center;
+  padding: 3rem 1rem;
+}
+
+button {
+  background-color: #42b983;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+button:hover {
+  background-color: #3aa876;
+}
+
 @media (max-width: 768px) {
-  .distribution-header {
+  .distribution-title {
     flex-direction: column;
-    align-items: center;
-    text-align: center;
+    align-items: flex-start;
+    gap: 1rem;
   }
   
-  .distribution-logo-container {
-    margin-right: 0;
-    margin-bottom: 1.5rem;
-  }
-  
-  .distribution-meta {
-    justify-content: center;
-  }
-  
-  .distribution-actions {
-    flex-direction: column;
+  .details-grid, .requirements-grid, .screenshots-grid {
+    grid-template-columns: 1fr;
   }
 }
 </style>
