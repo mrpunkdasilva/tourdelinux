@@ -43,6 +43,37 @@ const router = createRouter({
       path: '/about',
       name: 'about',
       component: () => import('../views/AboutView.vue')
+    },
+    // Terminal-based routes
+    {
+      path: '/terminal',
+      name: 'terminal',
+      component: () => import('../components/TerminalView.vue')
+    },
+    {
+      path: '/terminal/tips',
+      name: 'terminal-tips',
+      component: () => import('../components/TerminalView.vue')
+    },
+    {
+      path: '/terminal/news',
+      name: 'terminal-news',
+      component: () => import('../components/TerminalView.vue')
+    },
+    {
+      path: '/terminal/tips/:id',
+      name: 'terminal-tip-detail',
+      component: () => import('../components/TerminalView.vue')
+    },
+    {
+      path: '/terminal/news/:id',
+      name: 'terminal-news-detail',
+      component: () => import('../components/TerminalView.vue')
+    },
+    {
+      path: '/terminal/:cmd(.*)*',
+      name: 'terminal-unknown',
+      component: () => import('../components/TerminalView.vue')
     }
   ],
   scrollBehavior(to, from, savedPosition) {

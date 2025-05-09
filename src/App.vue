@@ -9,7 +9,6 @@ import TheFooter from './components/organisms/TheFooter.vue'
       <RouterView />
     </main>
 
-    <TheFooter />
   </div>
 </template>
 

@@ -76,7 +76,6 @@ onMounted(() => {
       <div class="news-detail">
         <div class="terminal-command-line mb-4">
           <span class="terminal-prompt" @click="goBack">$ cd /news</span>
-          <span class="cursor-blink"></span>
         </div>
 
         <div v-if="isLoading" class="loading">

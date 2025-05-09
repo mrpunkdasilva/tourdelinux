@@ -8,7 +8,8 @@ const isLoading = ref(true)
 const terminalReady = ref(false)
 const currentSection = ref('welcome')
 const terminalInput = ref('')
-const terminalHistory = ref<string[]>([])
+type TerminalLine = { text: string, isError?: boolean, isCommand?: boolean }
+const terminalHistory = ref<TerminalLine[]>([])
 const cursorVisible = ref(true)
 const welcomeMessage = ref('')
 const welcomeText = 'Bem-vindo ao Tour de Linux - Terminal v1.0.0'
@@ -103,7 +104,6 @@ const commands = {
 
 // Adiciona texto ao histórico do terminal
 const addToHistory = (text: string, isError = false) => {
-  // Store text with metadata for styling
   terminalHistory.value.push({
     text,
     isError,
@@ -193,13 +193,30 @@ onMounted(async () => {
       <div class="terminal-body">
         <div class="terminal-welcome" v-if="welcomeMessage">
           <pre class="ascii-art">
+      .--.
+     |o_o |
+     |:_/ |
+    //   \ \
+   (|     | )
+  /'\_   _/`\
+  \___)=(___/
+</pre>
+<pre class="ascii-art">
  _____                     _        _     _                  
 |_   _|__  _   _ _ __   __| | ___  | |   (_)_ __  _   ___  __
   | |/ _ \| | | | '_ \ / _` |/ _ \ | |   | | '_ \| | | \ \/ /
   | | (_) | |_| | | | | (_| |  __/ | |___| | | | | |_| |>  < 
   |_|\___/ \__,_|_| |_|\__,_|\___| |_____|_|_| |_|\__,_/_/\_\
-          </pre>
-          <div class="welcome-message">{{ welcomeMessage }}</div>
+</pre>
+<div class="terminal-examples">
+  <span class="example-label">Exemplos de comandos:</span>
+  <span class="example-command">help</span>
+  <span class="example-command">distros</span>
+  <span class="example-command">tips</span>
+  <span class="example-command">news</span>
+  <span class="example-command">about</span>
+</div>
+<div class="welcome-message">{{ welcomeMessage }}</div>
         </div>
 
         <div class="terminal-output">
@@ -236,6 +253,8 @@ onMounted(async () => {
 
         <div class="terminal-input-line" v-if="terminalReady">
           <span class="prompt">tour-de-linux@cyberpunk:~$</span>
+          <span class="cursor" :class="{ 'cursor-visible': cursorVisible }"></span>
+          <span class="typed-text">{{ terminalInput }}</span>
           <input 
             type="text" 
             class="terminal-input" 
@@ -245,8 +264,8 @@ onMounted(async () => {
             autofocus
             spellcheck="false"
             ref="terminalInputRef"
+            style="position: absolute; left: -9999px; width: 0; height: 0; opacity: 0; pointer-events: none;" 
           >
-          <span class="cursor" :class="{ 'cursor-visible': cursorVisible }"></span>
         </div>
       </div>
     </div>
@@ -379,6 +398,17 @@ onMounted(async () => {
   display: flex;
   align-items: center;
   margin-top: 10px;
+  position: relative;
+}
+
+.typed-text {
+  color: #d4d4d4;
+  font-family: 'Courier New', monospace;
+  font-size: 1rem;
+  min-width: 1em;
+  display: inline-block;
+  vertical-align: middle;
+  letter-spacing: 0.02em;
 }
 
 .prompt {
@@ -396,7 +426,54 @@ onMounted(async () => {
   flex-grow: 1;
   outline: none;
   caret-color: transparent; /* Hide default cursor */
+  box-shadow: none !important;
+  padding: 0;
+  margin: 0;
+  height: 1.2em;
 }
+
+.cursor {
+  width: 8px;
+  height: 16px;
+  background-color: #d4d4d4; /* Light gray cursor */
+  display: inline-block;
+  margin-left: 0;
+  margin-right: 2px;
+  opacity: 0;
+  vertical-align: middle;
+  animation: blink 1s steps(1) infinite;
+}
+
+.cursor-visible {
+  opacity: 1;
+}
+
+.terminal-examples {
+  margin-bottom: 10px;
+  color: #dcdcaa;
+  font-size: 0.95rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5em;
+  align-items: center;
+}
+.example-label {
+  color: #569cd6;
+  font-weight: bold;
+  margin-right: 0.5em;
+}
+.example-command {
+  background: #252526;
+  color: #6a9955;
+  border-radius: 3px;
+  padding: 0.1em 0.5em;
+  font-family: 'Share Tech Mono', 'Courier New', monospace;
+  font-size: 0.95em;
+  margin-right: 0.2em;
+  box-shadow: 0 0 2px #6a9955;
+}
+
 
 .cursor {
   width: 8px;
