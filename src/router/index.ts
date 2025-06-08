@@ -71,6 +71,16 @@ const router = createRouter({
       component: () => import('../components/TerminalView.vue')
     },
     {
+      path: '/terminal/distros',
+      name: 'terminal-distros',
+      component: () => import('../components/TerminalView.vue')
+    },
+    {
+      path: '/terminal/distros/:id',
+      name: 'terminal-distro-detail',
+      component: () => import('../components/TerminalView.vue')
+    },
+    {
       path: '/terminal/:cmd(.*)*',
       name: 'terminal-unknown',
       component: () => import('../components/TerminalView.vue')

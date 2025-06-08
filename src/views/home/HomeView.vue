@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref, onMounted, nextTick } from 'vue'
-import FeaturedDistributions from '../../components/organisms/FeaturedDistributions.vue'
 import LatestTips from '../../components/organisms/LatestTips.vue'
 import NewsHighlights from '../../components/organisms/NewsHighlights.vue'
 
@@ -17,6 +16,50 @@ const typingSpeed = 50
 const activeCommand = ref(-1)
 const commandHistory = ref<string[]>([])
 const terminalInputRef = ref<HTMLInputElement | null>(null)
+
+// Dados das distribuições
+const distributions = [
+  {
+    id: 1,
+    name: 'Ubuntu',
+    version: '22.04 LTS',
+    category: 'desktop',
+    description: 'Uma das distribuições Linux mais populares, conhecida por sua facilidade de uso.',
+    rating: 4.5
+  },
+  {
+    id: 2,
+    name: 'Debian',
+    version: '11 Bullseye',
+    category: 'server',
+    description: 'Conhecida por sua estabilidade e segurança, é uma excelente escolha para servidores.',
+    rating: 4.7
+  },
+  {
+    id: 3,
+    name: 'Fedora',
+    version: '37',
+    category: 'desktop',
+    description: 'Distribuição patrocinada pela Red Hat, focada em software livre e inovação.',
+    rating: 4.3
+  },
+  {
+    id: 4,
+    name: 'Arch Linux',
+    version: 'Rolling Release',
+    category: 'desktop',
+    description: 'Distribuição minimalista com atualizações contínuas e grande personalização.',
+    rating: 4.6
+  },
+  {
+    id: 5,
+    name: 'Linux Mint',
+    version: '21',
+    category: 'desktop',
+    description: 'Baseada no Ubuntu, com foco em usabilidade e interface amigável.',
+    rating: 4.4
+  }
+]
 
 // Focus the terminal input when clicking anywhere in the terminal
 const focusInput = () => {
@@ -77,7 +120,9 @@ const commands = {
     addToHistory('  help         - Mostra esta ajuda')
     addToHistory('  clear        - Limpa o terminal')
     addToHistory('  distros      - Mostra distribuições em destaque')
+    addToHistory('  distro [ID]  - Mostra detalhes de uma distribuição específica')
     addToHistory('  tips         - Mostra dicas recentes')
+    addToHistory('  tips [filtro] - Filtra dicas (use "tips help" para mais informações)')
     addToHistory('  news         - Mostra notícias do mundo Linux')
     addToHistory('  about        - Sobre o Tour de Linux')
   },
@@ -88,8 +133,32 @@ const commands = {
     addToHistory('Carregando distribuições em destaque...')
     currentSection.value = 'distros'
   },
-  tips: () => {
-    addToHistory('Carregando dicas recentes...')
+  tips: (args = '') => {
+    const params = args.trim().split(' ')
+    
+    if (params[0] === 'help') {
+      addToHistory('Uso do comando tips:')
+      addToHistory('  tips             - Mostra todas as dicas recentes')
+      addToHistory('  tips categoria   - Filtra dicas por categoria (ex: tips Performance)')
+      addToHistory('  tips tag [nome]  - Filtra dicas por tag (ex: tips tag nginx)')
+      addToHistory('  tips help        - Mostra esta ajuda')
+      return
+    }
+    
+    // Store filter parameters to be used by the LatestTips component
+    if (params[0]) {
+      if (params[0] === 'tag' && params[1]) {
+        addToHistory(`Carregando dicas com a tag "${params[1]}"...`)
+        sessionStorage.setItem('tipFilter', JSON.stringify({ type: 'tag', value: params[1] }))
+      } else {
+        addToHistory(`Carregando dicas da categoria "${params[0]}"...`)
+        sessionStorage.setItem('tipFilter', JSON.stringify({ type: 'category', value: params[0] }))
+      }
+    } else {
+      addToHistory('Carregando todas as dicas recentes...')
+      sessionStorage.removeItem('tipFilter')
+    }
+    
     currentSection.value = 'tips'
   },
   news: () => {
@@ -111,6 +180,11 @@ const addToHistory = (text: string, isError = false) => {
   })
 }
 
+// Função para obter uma distribuição pelo ID
+const getDistributionById = (id: number) => {
+  return distributions.find(d => d.id === id)
+}
+
 // Processa o comando digitado
 const processCommand = () => {
   const command = terminalInput.value.trim().toLowerCase()
@@ -125,8 +199,32 @@ const processCommand = () => {
 
     addToHistory(`> ${command}`, false)
 
-    if (commands[command as keyof typeof commands]) {
+    if (command.startsWith('tips ')) {
+      const args = command.substring(5) // Remove 'tips ' from the command
+      commands.tips(args)
+    } else if (commands[command as keyof typeof commands]) {
       commands[command as keyof typeof commands]()
+    } else if (command.startsWith('distro ')) {
+      const idStr = command.split(' ')[1]
+      const id = parseInt(idStr)
+      
+      if (!isNaN(id)) {
+        const distro = getDistributionById(id)
+        if (distro) {
+          addToHistory(`===== ${distro.name.toUpperCase()} =====`)
+          addToHistory(`ID: ${distro.id}`)
+          addToHistory(`Nome: ${distro.name}`)
+          addToHistory(`Versão: ${distro.version}`)
+          addToHistory(`Categoria: ${distro.category}`)
+          addToHistory(`Avaliação: ${distro.rating}/5`)
+          addToHistory(`Descrição: ${distro.description}`)
+          addToHistory('---------------------------------')
+        } else {
+          addToHistory(`Distribuição com ID ${id} não encontrada.`, true)
+        }
+      } else {
+        addToHistory(`ID inválido: ${idStr}`, true)
+      }
     } else {
       addToHistory(`Comando não reconhecido: ${command}`, true)
       addToHistory('Digite "help" para ver os comandos disponíveis')
@@ -165,7 +263,8 @@ onMounted(async () => {
     addToHistory('Iniciando sistema...')
     addToHistory('Kernel Linux 6.2.0 carregado')
     addToHistory('Todos os sistemas operacionais')
-    addToHistory('Digite "help" para ver os comandos disponíveis')
+    addToHistory('Digite "distros" para ver distribuições Linux disponíveis')
+    addToHistory('Digite "help" para ver todos os comandos disponíveis')
 
     terminalReady.value = true
 
@@ -236,8 +335,29 @@ onMounted(async () => {
 
         <div class="terminal-section" v-if="currentSection !== 'welcome'">
           <div v-if="currentSection === 'distros'" class="section-content">
-            <h2 class="section-title">Distribuições em Destaque</h2>
-            <FeaturedDistributions />
+            <div class="terminal-distros">
+              <div class="terminal-header-text">===== DISTRIBUIÇÕES LINUX =====</div>
+              <br>
+              <div v-for="distro in distributions" :key="distro.id" class="distro-item">
+                <span class="distro-id">[{{ distro.id }}]</span> 
+                <span class="distro-name">{{ distro.name }}</span> 
+                <span class="distro-version">({{ distro.version }})</span> - 
+                <span class="distro-category">{{ distro.category }}</span>
+                <br>
+                <span class="distro-description">{{ distro.description }}</span>
+                <br>
+              </div>
+              <br>
+              <div class="terminal-divider">---------------------------------</div>
+              <br>
+              <div class="terminal-help-text">
+                Para ver detalhes de uma distribuição, digite: <span class="terminal-command">distro [ID]</span>
+                <br>
+                Exemplo: <span class="terminal-command">distro 1</span> para ver detalhes do Ubuntu
+                <br>
+                Digite <span class="terminal-command">help</span> para ver todos os comandos disponíveis
+              </div>
+            </div>
           </div>
 
           <div v-if="currentSection === 'tips'" class="section-content">
@@ -472,6 +592,56 @@ onMounted(async () => {
   font-size: 0.95em;
   margin-right: 0.2em;
   box-shadow: 0 0 2px #6a9955;
+}
+
+/* Estilos para a exibição de distribuições em formato de terminal */
+.terminal-distros {
+  font-family: 'Courier New', monospace;
+  color: #d4d4d4;
+  line-height: 1.5;
+}
+
+.terminal-header-text {
+  color: #d4d4d4;
+  font-weight: bold;
+  font-family: 'Courier New', monospace;
+}
+
+.terminal-divider {
+  color: #555;
+}
+
+.terminal-help-text {
+  color: #888;
+  font-style: italic;
+}
+
+.distro-item {
+  margin-bottom: 10px;
+}
+
+.distro-id {
+  color: #ce9178;
+  font-weight: bold;
+}
+
+.distro-name {
+  color: #4CAF50;
+  font-weight: bold;
+}
+
+.distro-version {
+  color: #569cd6;
+}
+
+.distro-category {
+  color: #dcdcaa;
+}
+
+.distro-description {
+  color: #d4d4d4;
+  padding-left: 20px;
+  display: block;
 }
 
 

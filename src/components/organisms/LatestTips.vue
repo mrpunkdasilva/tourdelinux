@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import TipCard from '../molecules/TipCard.vue'
 
 const router = useRouter()
 const tips = ref([])
+const filteredTips = ref([])
 const isLoading = ref(true)
+const filterInfo = ref({ active: false, type: '', value: '' })
 
 // Simulação de busca de dados
 const fetchTips = async () => {
@@ -14,6 +16,15 @@ const fetchTips = async () => {
   try {
     // Em uma aplicação real, aqui faríamos uma chamada à API
     await new Promise(resolve => setTimeout(resolve, 800))
+
+    // Verificar se há filtros aplicados
+    const filterData = sessionStorage.getItem('tipFilter')
+    if (filterData) {
+      const filter = JSON.parse(filterData)
+      filterInfo.value = { active: true, type: filter.type, value: filter.value }
+    } else {
+      filterInfo.value = { active: false, type: '', value: '' }
+    }
 
     // Dados mockados para demonstração
     tips.value = [
@@ -51,7 +62,29 @@ const fetchTips = async () => {
   } catch (err) {
     console.error('Erro ao carregar dicas:', err)
   } finally {
+    // Aplicar filtros se necessário
+    applyFilters()
     isLoading.value = false
+  }
+}
+
+// Função para aplicar filtros nas dicas
+const applyFilters = () => {
+  if (!filterInfo.value.active) {
+    filteredTips.value = [...tips.value]
+    return
+  }
+
+  if (filterInfo.value.type === 'category') {
+    filteredTips.value = tips.value.filter(tip => 
+      tip.category.toLowerCase() === filterInfo.value.value.toLowerCase()
+    )
+  } else if (filterInfo.value.type === 'tag') {
+    filteredTips.value = tips.value.filter(tip => 
+      tip.tags.some(tag => tag.toLowerCase() === filterInfo.value.value.toLowerCase())
+    )
+  } else {
+    filteredTips.value = [...tips.value]
   }
 }
 
@@ -59,8 +92,18 @@ const navigateToTip = (id) => {
   router.push({ name: 'tip-detail', params: { id } })
 }
 
+// Limpar filtro ao desmontar o componente
+const clearFilter = () => {
+  sessionStorage.removeItem('tipFilter')
+}
+
 onMounted(() => {
   fetchTips()
+})
+
+// Limpar filtro ao desmontar o componente
+onUnmounted(() => {
+  clearFilter()
 })
 </script>
 
@@ -70,13 +113,34 @@ onMounted(() => {
       <p>Carregando dicas...</p>
     </div>
 
-    <div v-else class="tips-grid">
-      <div 
-        v-for="tip in tips" 
-        :key="tip.id"
-        @click="navigateToTip(tip.id)"
-      >
-        <TipCard :tip="tip" />
+    <div v-else>
+      <!-- Mostrar informações de filtro se aplicável -->
+      <div v-if="filterInfo.active" class="filter-info">
+        <div class="filter-badge">
+          <span>Filtro: </span>
+          <span v-if="filterInfo.type === 'category'">Categoria "{{ filterInfo.value }}"</span>
+          <span v-else-if="filterInfo.type === 'tag'">Tag "{{ filterInfo.value }}"</span>
+        </div>
+        <div class="filter-results">
+          {{ filteredTips.length }} resultado(s) encontrado(s)
+        </div>
+      </div>
+
+      <!-- Mensagem quando não há resultados -->
+      <div v-if="filteredTips.length === 0" class="no-results">
+        <p>Nenhuma dica encontrada com os filtros aplicados.</p>
+        <p class="help-text">Use o comando "tips" sem filtros para ver todas as dicas.</p>
+      </div>
+
+      <!-- Grid de dicas -->
+      <div v-else class="tips-grid">
+        <div 
+          v-for="tip in filteredTips" 
+          :key="tip.id"
+          @click="navigateToTip(tip.id)"
+        >
+          <TipCard :tip="tip" />
+        </div>
       </div>
     </div>
   </div>
@@ -135,9 +199,54 @@ onMounted(() => {
   color: #0f0 !important;
 }
 
+.filter-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding: 0.5rem 1rem;
+  background-color: rgba(0, 20, 0, 0.7);
+  border: 1px solid #0f0;
+  border-radius: 4px;
+  box-shadow: 0 0 10px rgba(0, 255, 0, 0.2);
+}
+
+.filter-badge {
+  color: #0f0;
+  font-weight: bold;
+  text-shadow: 0 0 5px #0f0;
+}
+
+.filter-results {
+  color: rgba(0, 255, 0, 0.7);
+  font-style: italic;
+}
+
+.no-results {
+  text-align: center;
+  padding: 2rem;
+  color: #0f0;
+  background-color: rgba(0, 20, 0, 0.7);
+  border: 1px solid #0f0;
+  border-radius: 4px;
+  box-shadow: 0 0 10px rgba(0, 255, 0, 0.2);
+}
+
+.help-text {
+  margin-top: 1rem;
+  font-style: italic;
+  color: rgba(0, 255, 0, 0.7);
+}
+
 @media (max-width: 768px) {
   .tips-grid {
     grid-template-columns: 1fr;
+  }
+  
+  .filter-info {
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: flex-start;
   }
 }
 </style>
