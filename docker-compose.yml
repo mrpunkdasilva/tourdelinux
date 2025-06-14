@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  # Production service
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+    # For development
+    # volumes:
+    #   - ./:/app
+    #   - /app/node_modules
+
+  # Development service with hot-reloading
+  dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    # This service is commented out by default
+    # Uncomment to use the development environment
+    profiles:
+      - dev
