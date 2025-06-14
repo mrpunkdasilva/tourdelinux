@@ -189,13 +189,6 @@ All content is accessible through the terminal interface and organized into seve
 - New technologies in the Linux ecosystem
 - Access via commands like `news` or `releases ubuntu`
 
-## Development
-
-### Recommended IDE Setup
-
-- [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
-
-
 ## Contributing
 
 We welcome contributions to Tour de Linux! Here's how you can help:
